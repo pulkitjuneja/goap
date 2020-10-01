@@ -1,10 +1,23 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /**
  * Plans what actions can be completed in order to fulfill a goal state.
  */
+
+
+public static class Extensions
+{
+    public static HashSet<T> ToHashSet<T>(
+        this IEnumerable<T> source,
+        IEqualityComparer<T> comparer = null)
+    {
+        return new HashSet<T>(source, comparer);
+    }
+}
+
 public class GoapPlanner
 {
 
@@ -25,10 +38,7 @@ public class GoapPlanner
 
 		// check what actions can run using their checkProceduralPrecondition
 		HashSet<GoapAction> usableActions = new HashSet<GoapAction> ();
-		foreach (GoapAction a in availableActions) {
-			if ( a.checkProceduralPrecondition(agent) )
-				usableActions.Add(a);
-		}
+		usableActions = availableActions.Where(action => action.checkProceduralPrecondition(agent)).ToHashSet<GoapAction>();
 		
 		// we now have all actions that can run, stored in usableActions
 
@@ -131,19 +141,7 @@ public class GoapPlanner
 	 * then this returns false.
 	 */
 	private bool inState(HashSet<KeyValuePair<string,object>> test, HashSet<KeyValuePair<string,object>> state) {
-		bool allMatch = true;
-		foreach (KeyValuePair<string,object> t in test) {
-			bool match = false;
-			foreach (KeyValuePair<string,object> s in state) {
-				if (s.Equals(t)) {
-					match = true;
-					break;
-				}
-			}
-			if (!match)
-				allMatch = false;
-		}
-		return allMatch;
+		return test.All(action => state.Contains(action));
 	}
 	
 	/**
