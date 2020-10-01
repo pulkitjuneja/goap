@@ -36,13 +36,13 @@ public abstract class Labourer : MonoBehaviour, IGoap
 	/**
 	 * Key-Value data that will feed the GOAP actions and system while planning.
 	 */
-	public HashSet<KeyValuePair<string,object>> getWorldState () {
-		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
+	public Dictionary<string,object> getWorldState () {
+		Dictionary<string,object> worldData = new Dictionary<string,object> ();
 
-		worldData.Add(new KeyValuePair<string, object>("hasOre", (backpack.numOre > 0) ));
-		worldData.Add(new KeyValuePair<string, object>("hasLogs", (backpack.numLogs > 0) ));
-		worldData.Add(new KeyValuePair<string, object>("hasFirewood", (backpack.numFirewood > 0) ));
-		worldData.Add(new KeyValuePair<string, object>("hasTool", (backpack.tool != null) ));
+		worldData.Add("hasOre", (backpack.numOre > 0) );
+		worldData.Add("hasLogs", (backpack.numLogs > 0) );
+		worldData.Add("hasFirewood", (backpack.numFirewood > 0) );
+		worldData.Add("hasTool", (backpack.tool != null) );
 
 		return worldData;
 	}
@@ -50,17 +50,17 @@ public abstract class Labourer : MonoBehaviour, IGoap
 	/**
 	 * Implement in subclasses
 	 */
-	public abstract HashSet<KeyValuePair<string,object>> createGoalState ();
+	public abstract Dictionary<string,object> createGoalState ();
 
 
-	public void planFailed (HashSet<KeyValuePair<string, object>> failedGoal)
+	public void planFailed (Dictionary<string,object> failedGoal)
 	{
 		// Not handling this here since we are making sure our goals will always succeed.
 		// But normally you want to make sure the world state has changed before running
 		// the same goal again, or else it will just fail.
 	}
 
-	public void planFound (HashSet<KeyValuePair<string, object>> goal, Queue<GoapAction> actions)
+	public void planFound (Dictionary<string,object> goal, Queue<GoapAction> actions)
 	{
 		// Yay we found a plan for our goal
 		Debug.Log ("<color=green>Plan found</color> "+GoapAgent.prettyPrint(actions));

@@ -64,8 +64,8 @@ public sealed class GoapAgent : MonoBehaviour {
 			// GOAP planning
 
 			// get the world state and the goal we want to plan for
-			HashSet<KeyValuePair<string,object>> worldState = dataProvider.getWorldState();
-			HashSet<KeyValuePair<string,object>> goal = dataProvider.createGoalState();
+			Dictionary<string, object> worldState = dataProvider.getWorldState();
+			Dictionary<string, object> goal = dataProvider.createGoalState();
 
 			// Plan
 			Queue<GoapAction> plan = planner.plan(gameObject, availableActions, worldState, goal);
@@ -195,7 +195,7 @@ public sealed class GoapAgent : MonoBehaviour {
 		Debug.Log("Found actions: "+prettyPrint(actions));
 	}
 
-	public static string prettyPrint(HashSet<KeyValuePair<string,object>> state) {
+	public static string prettyPrint(Dictionary<string, object> state) {
 		String s = "";
 		foreach (KeyValuePair<string,object> kvp in state) {
 			s += kvp.Key + ":" + kvp.Value.ToString();

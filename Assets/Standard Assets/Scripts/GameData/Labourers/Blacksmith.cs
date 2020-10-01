@@ -8,10 +8,10 @@ public class Blacksmith : Labourer
 	 * Our only goal will ever be to make tools.
 	 * The ForgeTooldAction will be able to fulfill this goal.
 	 */
-	public override HashSet<KeyValuePair<string,object>> createGoalState () {
-		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
+	public override Dictionary<string,object> createGoalState () {
+		Dictionary<string,object> goal = new Dictionary<string,object> ();
 		
-		goal.Add(new KeyValuePair<string, object>("collectTools", true ));
+		goal.Add("collectTools", true );
 		return goal;
 	}
 }

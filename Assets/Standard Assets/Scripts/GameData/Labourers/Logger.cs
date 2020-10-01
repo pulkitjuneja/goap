@@ -8,10 +8,10 @@ public class Logger : Labourer
 	 * Our only goal will ever be to chop trees.
 	 * The ChopTreeAction will be able to fulfill this goal.
 	 */
-	public override HashSet<KeyValuePair<string,object>> createGoalState () {
-		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
+	public override Dictionary<string,object> createGoalState () {
+		Dictionary<string,object> goal = new Dictionary<string,object> ();
 		
-		goal.Add(new KeyValuePair<string, object>("collectLogs", true ));
+		goal.Add("collectLogs", true );
 		return goal;
 	}
 
